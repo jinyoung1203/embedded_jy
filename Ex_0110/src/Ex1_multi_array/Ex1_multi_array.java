@@ -22,7 +22,7 @@ public class Ex1_multi_array {
 		
 		//2차원 배열 test의 모든값 출력!
 		//test.length ->큰방의 갯수
-		//test[i].length->각 큰바에 포함되어 있는 작은방의 갯수
+		//test[i].length->각 큰방에 포함되어 있는 작은방의 갯수
 		for (int i = 0; i < test.length; i++) {
 
 			for (int j = 0; j < test[i].length; j++) {
