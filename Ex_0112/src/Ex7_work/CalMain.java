@@ -12,6 +12,45 @@ public class CalMain {
 		//연산자 : +
 		
 		Scanner sc = new Scanner(System.in);
+		System.out.println("수1 : ");
+		int su1 = sc.nextInt();
 		
-	}
+		System.out.println("수2 : ");
+		int su2 = sc.nextInt();
+		
+		System.out.println("연산자 : ");
+		String op = sc.next();
+		
+		Calculator cal = new Calculator();
+		cal.getResult(op, su1, su2);
+		
+	}//main
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
