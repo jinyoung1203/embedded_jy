@@ -1,5 +1,6 @@
 package Ex5_work;
 
+//자판기 클래스 생성자 사용하여 수정(코드절약)
 import java.util.Scanner;
 
 public class VendingMain {
