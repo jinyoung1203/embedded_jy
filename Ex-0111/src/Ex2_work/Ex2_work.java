@@ -27,7 +27,7 @@ public class Ex2_work {
 		} // for
 
 		if (!ori.equals(rev)) {
-			System.out.println(" ori+ 은(는) 회문수가 아님");
+			System.out.println(ori + "은(는) 회문수가 아님");
 		} else {
 			System.out.println(ori + "은(는) 회문수이다");
 		}
