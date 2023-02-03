@@ -15,20 +15,20 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ChatClient extends JFrame implements Runnable{
+public class ChatClient extends JFrame implements Runnable {
 
 	JTextArea area;
 	JTextField input;
 	JButton send_bt;
 
-	//서버 접속을 위한 객체
+	// 서버 접속을 위한 객체
 	Socket s;
 	BufferedReader in = null;
 	PrintWriter out = null;
 	Thread t;
 
 	public ChatClient() {
-		
+
 		setBounds(100, 100, 400, 500);
 		setLayout(null);
 
@@ -41,112 +41,103 @@ public class ChatClient extends JFrame implements Runnable{
 		send_bt = new JButton("전송");
 		send_bt.setBounds(270, 395, 100, 50);
 
-		//TextField, Button, TextArea를 frame에 추가
+		// TextField, Button, TextArea를 frame에 추가
 		add(area);
 		add(input);
 		add(send_bt);
 
-		//현재 클라이언트를 서버에 접속
+		// 현재 클라이언트를 서버에 접속
 		connected();
 
-		//전송버튼 클릭시 서버에 메시지를 전달하는 감지자
+		// 전송버튼 클릭시 서버에 메시지를 전달하는 감지자
 		send_bt.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				sendData();//서버로 메시지 전달하기 메서드
+				sendData();// 서버로 메시지 전달하기 메서드
 			}
 		});
 
-		t = new Thread( this );
+		t = new Thread(this);
 		t.start();
 
-		//프레임 사이즈 변경 불가
+		// 프레임 사이즈 변경 불가
 		setResizable(false);
 
-		addWindowListener( new WindowAdapter() {
+		addWindowListener(new WindowAdapter() {
 
 			public void windowClosing(WindowEvent e) {
-				//x버튼을 눌러서 종료하기 전에 서버와의 접속을 해제
+				// x버튼을 눌러서 종료하기 전에 서버와의 접속을 해제
 				out.println("xx:~X");
 			};
 
-		} );
-		
+		});
+
 		setVisible(true);
 
-	}//생성자
+	}// 생성자
 
-	//서버접속 메서드
+	// 서버접속 메서드
 	private void connected() {
 
 		try {
 
 			s = new Socket("192.168.3.101", 3500);
 
-			//서버에서 넘어온 값을 읽어들이기 위한 input스트림
-			in = new BufferedReader( 
-					new InputStreamReader( s.getInputStream() ) );
+			// 서버에서 넘어온 값을 읽어들이기 위한 input스트림
+			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
-			//문자열을 서버로 전송하기 위한 스트림
+			// 문자열을 서버로 전송하기 위한 스트림
 			out = new PrintWriter(s.getOutputStream(), true);
 
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
-	}//connected()
+	}// connected()
 
-	//서버에 데이터를 전달하는 메서드
+	// 서버에 데이터를 전달하는 메서드
 	private void sendData() {
 		String msg = input.getText();
 		out.println(msg);
 		input.setText("");
-	}//sendData()
+	}// sendData()
 
 	@Override
 	public void run() {
 
-		//서버로부터 전달되는 메시지를 기다린다
+		// 서버로부터 전달되는 메시지를 기다린다
 
 		try {
-			
-			while(true) {
-				
+
+			while (true) {
+
 				String msg = in.readLine();
 
-				if(msg.equals("xx:~X")) {
+				if (msg.equals("xx:~X")) {
 					break;
 				}
 
-				if(msg != null) {
+				if (msg != null) {
 					area.append(msg + "\n");
 				}
-			}//while
-			
+			} // while
+
 		} catch (Exception e) {
 
-		} 
+		} finally {
 
-		try {
-			out.close();
-			in.close();
-			s.close();
-			System.exit(0);
-		} catch (Exception e2) {
-			// TODO: handle exception
+			try {
+				out.close();
+				in.close();
+				s.close();
+				System.exit(0);
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+
 		}
 
-	}//run()
+	}// run()
 
 }
-
-
-
-
-
-
-
-
-
-
